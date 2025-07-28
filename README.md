@@ -1,13 +1,13 @@
 # 🛡️ Windows Endpoint Monitoring with Wazuh, VirusTotal & Active Response
 
 
-While working on some lab simulations, I unintentionally downloaded a malicious file. That incident made me realize how easy it is to get compromised — even when you're trying to be careful.
+While working on some lab simulations, I unintentionally downloaded a malicious file. That incident made me realize how easy it is to get compromised - even when you're trying to be careful.
 
 So I decided to build an automated setup where:
 
 - **Suspicious files** in the `Downloads` folder are immediately **detected**.
 - They are **scanned with VirusTotal** for reputation.
-- If flagged as malicious, they’re **automatically deleted** — no manual action needed.
+- If flagged as malicious, they’re **automatically deleted** - no manual action needed.
 
 This project uses **Wazuh**, **VirusTotal integration**, and a **custom Python-based Active Response script** to secure the endpoint with minimal human intervention.
 
