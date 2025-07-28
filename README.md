@@ -191,7 +191,3 @@ cp .\eicar.txt C:\Users\<USER_NAME>\Downloads
 
 ---
 
-## 📬 Feel free to contribute or reach out!
-
-If you’re setting up a similar environment or want to explore Wazuh + Active Response, feel free to fork this repo.
----
