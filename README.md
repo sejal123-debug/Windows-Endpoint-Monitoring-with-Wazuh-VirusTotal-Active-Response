@@ -1,6 +1,6 @@
 # Windows-Endpoint-Monitoring-with-Wazuh-VirusTotal-Active-Response
 
-````
+
 # 🛡️ Windows Endpoint Monitoring with Wazuh, VirusTotal & Active Response
 
 
