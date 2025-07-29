@@ -22,6 +22,7 @@ Keep reading for a step-by-step walkthrough of how I set this up and validated i
 
 ---
 
+
 ## 📌 Tools Used
 
 * 🧩 Wazuh - Kali Linux (Manager) + Windows (Agent)
@@ -47,10 +48,13 @@ In the Wazuh agent config (`ossec.conf`):
 * Installed Python and added it to PATH
 * Installed PyInstaller:
   `pip install pyinstaller`
+  
 
 <img width="1920" height="1080" alt="Screenshot (56)" src="https://github.com/user-attachments/assets/e9ec6277-9cde-4191-88f6-da92db1354ec" />
 
+
 <img width="1920" height="1080" alt="Screenshot (57)" src="https://github.com/user-attachments/assets/49bd3bb0-1aec-4bc1-86ff-5a0c693f6767" />
+
 
 
 #### `remove-threat.py` Highlights:
@@ -75,7 +79,9 @@ C:\Program Files (x86)\ossec-agent\active-response\bin\
 
 <img width="1920" height="1080" alt="Screenshot (59)" src="https://github.com/user-attachments/assets/6f25e1fc-3213-4692-ac3e-f587a92bcd6d" />
 
+
 <img width="1920" height="1080" alt="Screenshot (60)" src="https://github.com/user-attachments/assets/9256b741-4e97-43ad-b04b-2de2b84442c2" />
+
 
 
 Restart Wazuh Agent:
@@ -90,7 +96,7 @@ Restart-Service -Name wazuh
 
 ### 🔗 1. VirusTotal Integration (`ossec.conf`)
 
-Enter the command sudo nano /var/ossec/etc/ossec.conf in your linux machine
+Enter the command sudo nano /var/ossec/etc/ossec.conf in your linux machine at the end of the xml file before </config>
 
 ```xml
 <integration>
@@ -102,6 +108,7 @@ Enter the command sudo nano /var/ossec/etc/ossec.conf in your linux machine
 ```
 
 ### 🔄 2. Register Custom Command
+Add this line at the Active Response section
 
 ```xml
 <command>
@@ -112,6 +119,7 @@ Enter the command sudo nano /var/ossec/etc/ossec.conf in your linux machine
 ```
 
 ### ⚡ 3. Active Response Configuration
+Add this line at the Active Response section
 
 ```xml
 <active-response>
@@ -126,19 +134,19 @@ Enter the command sudo nano /var/ossec/etc/ossec.conf in your linux machine
 
 Enter the command var/ossec/etc/rules/local_rules.xml
 ```xml
-<group name="virustotal,">
+<group name="virustotal">
   <rule id="100092" level="12">
     <if_sid>657</if_sid>
     <match>Successfully removed threat</match>
-    <description>Threat removed at: $(parameters.alert.data.virustotal.source.file)</description>
+    <description>$(parameters.program) removed threat located at $(parameters.alert.data.virustotal.source.file)</description>
   </rule>
-
   <rule id="100093" level="12">
     <if_sid>657</if_sid>
     <match>Error removing threat</match>
-    <description>Error removing threat at: $(parameters.alert.data.virustotal.source.file)</description>
+    <description>Error removing threat located at $(parameters.alert.data.virustotal.source.file)</description>
   </rule>
 </group>
+
 ```
 
 Restart Wazuh Manager:
@@ -162,6 +170,9 @@ Windows Security → Virus & threat protection → Manage settings → Real-time
 Invoke-WebRequest -Uri https://secure.eicar.org/eicar.com.txt -OutFile eicar.txt
 cp .\eicar.txt C:\Users\<USER_NAME>\Downloads
 ```
+or 
+
+Go to https://www.ikarussecurity.com/en/download-test-viruses-for-free/  and download the EICAR-Testvirus
 
 ---
 
@@ -170,6 +181,10 @@ cp .\eicar.txt C:\Users\<USER_NAME>\Downloads
 ### Check Dashboard:
 
 * Wazuh Web UI → **Threat Hunting**
+  
+
+<img width="1920" height="937" alt="Screenshot_2025-07-29_11_43_00" src="https://github.com/user-attachments/assets/4890c8d2-be5f-488f-9eae-3e9b77536960" />
+
 
 ### Monitor Logs:
 
